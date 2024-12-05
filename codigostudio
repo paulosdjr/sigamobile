@@ -1,0 +1,332 @@
+<base href="." /><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title></title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&amp;display=swap" rel="stylesheet" /><script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style type="text/css">* {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        body {
+            background: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .mobile-container {
+            width: 100%;
+            max-width: 480px;
+            background: #fff;
+            min-height: 100vh;
+            border-radius: 16px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            border: 2px solid #800000;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            background: #800000;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+            font-size: 1.5rem;
+            border-radius: 16px 16px 0 0;
+        }
+
+        .content {
+            padding: 20px;
+            flex-grow: 1;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+            position: relative;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            font-size: 1rem;
+        }
+
+        input {
+            padding-right: 2.5rem;
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #800000;
+            font-size: 1.2rem;
+        }
+
+        .button {
+            width: 100%;
+            padding: 12px;
+            background: #800000;
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 1rem;
+            transition: background 0.3s;
+        }
+
+        .button:hover {
+            background: #b83c3c;
+        }
+
+        .menu-item, .submenu-item {
+            padding: 12px;
+            background: #f4f4f4;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .menu-item:hover, .submenu-item:hover {
+            background: #e4e4e4;
+        }
+
+        .footer {
+            background: #800000;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            font-size: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: auto; /* Fixa os botões no rodapé */
+        }
+
+        .footer button {
+            background: transparent;
+            border: 2px solid #fff;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .footer button:hover {
+            background: #fff;
+            color: #800000;
+        }
+
+        .error {
+            color: red;
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        h2 {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            text-align: center;
+            color: #800000;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+            text-align: center;
+            padding: 8px;
+        }
+
+        th {
+            background-color: #800000;
+            color: white;
+        }
+
+        @media (max-width: 767px) {
+            .mobile-container {
+                width: 90%;
+                margin: 0 auto;
+            }
+
+            header {
+                font-size: 1.2rem;
+                padding: 15px;
+            }
+
+            .button {
+                font-size: 0.9rem;
+            }
+
+            h2 {
+                font-size: 1.1rem;
+            }
+
+            .input-group input, .input-group select {
+                padding: 10px;
+                font-size: 0.9rem;
+            }
+        }
+</style>
+<div class="mobile-container">
+<header>Siga - Faculdade de Tecnologia</header>
+
+<div class="content" id="login-screen">
+<h2>Acesse sua Conta</h2>
+
+<div class="input-group"><label for="role">Perfil</label> <select id="role"><option value="aluno">Aluno</option><option value="professor">Professor</option><option value="secretaria">Secretaria</option><option value="administrador">Administrador</option> </select></div>
+
+<div class="input-group"><label for="username">Usu&aacute;rio</label> <input id="username" placeholder="Digite seu usuário" type="text" /></div>
+
+<div class="input-group"><label for="password">Senha</label> <input id="password" placeholder="Digite sua senha" type="password" /> <span class="toggle-password" onclick="togglePassword()">👁️</span></div>
+
+<div class="error" id="error-message" style="display: none;">Usu&aacute;rio ou senha inv&aacute;lidos!</div>
+<button class="button" onclick="login()">Entrar</button></div>
+
+<div class="content" id="menu-screen" style="display: none;">
+<h2>Bem-vindo(a)!</h2>
+
+<div class="menu" id="menu"></div>
+</div>
+
+<div class="content" id="submenu-screen" style="display: none;">
+<h2>Detalhes</h2>
+
+<div class="submenu" id="submenu"></div>
+<button class="button" onclick="goBackToMenu()">Voltar ao Menu</button></div>
+
+<div class="footer"><button id="logout-button" onclick="logout()" style="display: none;">Sair</button><button id="back-button" onclick="goBackToMenu()" style="display: none;">Voltar ao Menu Inicial</button></div>
+</div>
+<script>
+        const users = {
+            aluno: { username: "aluno", password: "1234", menu: ["Disciplinas", "Frequência", "Notas"] },
+            professor: { username: "professor", password: "1234", menu: ["Gerenciar Turmas", "Lançar Notas", "Atendimento"] },
+            secretaria: { username: "secretaria", password: "1234", menu: ["Matrículas", "Relatórios", "Consultas"] },
+            administrador: { username: "admin", password: "admin", menu: ["Gerenciar Usuários", "Configurações", "Relatórios do Sistema"] },
+        };
+
+        const alunoData = {
+            disciplinas: ["Gestão Ambiental", "Banco de Dados", "Programação Web", "Estatística"],
+            frequencia: [1, 3, 0, 2],
+            notas: [8.5, 9.0, 7.5, 8.0]
+        };
+
+        function togglePassword() {
+            const passwordInput = document.getElementById("password");
+            const toggleIcon = document.querySelector(".toggle-password");
+            if (passwordInput.type === "password") {
+                passwordInput.type = "text";
+                toggleIcon.textContent = "🙈";
+            } else {
+                passwordInput.type = "password";
+                toggleIcon.textContent = "👁️";
+            }
+        }
+
+        function login() {
+            const role = document.getElementById("role").value;
+            const username = document.getElementById("username").value;
+            const password = document.getElementById("password").value;
+            const errorMessage = document.getElementById("error-message");
+
+            if (username === users[role].username && password === users[role].password) {
+                showMenu(users[role].menu);
+                document.getElementById("login-screen").style.display = "none";
+                document.getElementById("menu-screen").style.display = "block";
+                document.getElementById("logout-button").style.display = "block";
+                document.getElementById("back-button").style.display = "none";
+            } else {
+                errorMessage.style.display = "block";
+            }
+        }
+
+        function showMenu(menuItems) {
+            const menu = document.getElementById("menu");
+            menu.innerHTML = "";
+            menuItems.forEach((item) => {
+                const menuItem = document.createElement("div");
+                menuItem.className = "menu-item";
+                menuItem.textContent = item;
+                menuItem.onclick = () => showSubMenu(item);
+                menu.appendChild(menuItem);
+            });
+        }
+
+        function showSubMenu(menuItem) {
+            const submenu = document.getElementById("submenu");
+            submenu.innerHTML = "";
+            document.getElementById("menu-screen").style.display = "none";
+            document.getElementById("submenu-screen").style.display = "block";
+
+            if (menuItem === "Disciplinas") {
+                const table = document.createElement("table");
+                const header = table.insertRow();
+                header.insertCell().textContent = "Disciplina";
+                header.insertCell().textContent = "Nota";
+                header.insertCell().textContent = "Frequência";
+
+                alunoData.disciplinas.forEach((disciplina, i) => {
+                    const row = table.insertRow();
+                    row.insertCell().textContent = disciplina;
+                    row.insertCell().textContent = alunoData.notas[i];
+                    row.insertCell().textContent = alunoData.frequencia[i];
+                });
+
+                submenu.appendChild(table);
+            } else if (menuItem === "Frequência") {
+                alunoData.disciplinas.forEach((disciplina, i) => {
+                    const submenuItem = document.createElement("div");
+                    submenuItem.className = "submenu-item";
+                    submenuItem.textContent = `${disciplina}: ${alunoData.frequencia[i]} faltas`;
+                    submenu.appendChild(submenuItem);
+                });
+            } else if (menuItem === "Notas") {
+                alunoData.disciplinas.forEach((disciplina, i) => {
+                    const submenuItem = document.createElement("div");
+                    submenuItem.className = "submenu-item";
+                    submenuItem.textContent = `${disciplina}: Nota ${alunoData.notas[i]}`;
+                    submenu.appendChild(submenuItem);
+                });
+            }
+        }
+
+        function goBackToMenu() {
+            document.getElementById("submenu-screen").style.display = "none";
+            document.getElementById("menu-screen").style.display = "block";
+        }
+
+        function logout() {
+            document.getElementById("login-screen").style.display = "block";
+            document.getElementById("menu-screen").style.display = "none";
+            document.getElementById("submenu-screen").style.display = "none";
+            document.getElementById("username").value = "";
+            document.getElementById("password").value = "";
+            document.getElementById("logout-button").style.display = "none";
+            document.getElementById("back-button").style.display = "none";
+        }
+    </script>          
